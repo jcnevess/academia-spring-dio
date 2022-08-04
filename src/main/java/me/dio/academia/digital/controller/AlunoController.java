@@ -26,29 +26,31 @@ public class AlunoController {
     }
 
     @GetMapping
-    public List<Aluno> getAll(@RequestParam(value = "dataDeNascimento", required = false)
-                                  String dataDeNascimento) {
-        return service.getAll(dataDeNascimento);
+    public ResponseEntity<Iterable<Aluno>> getAll(
+            @RequestParam(value = "dataDeNascimento", required = false) String dataDeNascimento) {
+        return ResponseEntity.ok(service.getAll(dataDeNascimento));
     }
 
     @GetMapping("/{id}")
-    public Aluno get(@PathVariable Long id) {
-        return service.get(id);
+    public ResponseEntity<Aluno> get(@PathVariable Long id) {
+        return ResponseEntity.ok(service.get(id));
     }
 
     @PatchMapping("/{id}")
-    public Aluno update(@PathVariable Long id, @RequestBody AlunoUpdateForm form) {
-        return service.update(id, form);
+    public ResponseEntity<Aluno> update(@PathVariable Long id, @RequestBody AlunoUpdateForm form) {
+        return ResponseEntity.ok(service.update(id, form));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         service.delete(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}/avaliacao")
-    public List<AvaliacaoFisica> getAllAvaliacaoFisica(@PathVariable("id") Long idAluno) {
-        return service.getAllAvaliacaoFisicaAluno(idAluno);
+    public ResponseEntity<Iterable<AvaliacaoFisica>> getAllAvaliacaoFisica(
+            @PathVariable("id") Long idAluno) {
+        return ResponseEntity.ok(service.getAllAvaliacaoFisicaAluno(idAluno));
     }
 
 }

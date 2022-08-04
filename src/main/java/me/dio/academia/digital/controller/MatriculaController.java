@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/matricula")
@@ -24,17 +23,19 @@ public class MatriculaController {
     }
 
     @GetMapping
-    public List<Matricula> getAll(@RequestParam(name="bairro", required = false) String bairro) {
-        return service.getAll(bairro);
+    public ResponseEntity<Iterable<Matricula>> getAll(
+            @RequestParam(name="bairro", required = false) String bairro) {
+        return ResponseEntity.ok(service.getAll(bairro));
     }
 
     @GetMapping("/{id}")
-    public Matricula get(@PathVariable Long id) {
-        return service.get(id);
+    public ResponseEntity<Matricula> get(@PathVariable Long id) {
+        return ResponseEntity.ok(service.get(id));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
+        return ResponseEntity.ok().build();
     }
 }
