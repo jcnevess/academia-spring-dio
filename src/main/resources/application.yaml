@@ -12,6 +12,12 @@ spring:
       hibernate:
         format_sql: true
 
+  security:
+    user:
+      name: user
+      password: password
+      roles: USERS
+
 logging:
   level:
     me.dio.academia.digital: DEBUG
