@@ -22,39 +22,33 @@ public class AlunoController {
     private AlunoServiceImpl service;
 
     @PostMapping
-    @PreAuthorize("hasRole('manager')")
     public ResponseEntity<Aluno> create(@Valid @RequestBody AlunoForm form){
         return new ResponseEntity<>(service.create(form), HttpStatus.CREATED);
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('manager')")
     public ResponseEntity<Iterable<Aluno>> getAll(
             @RequestParam(value = "dataDeNascimento", required = false) String dataDeNascimento) {
         return ResponseEntity.ok(service.getAll(dataDeNascimento));
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('manager', 'user')")
     public ResponseEntity<Aluno> get(@PathVariable Long id) {
         return ResponseEntity.ok(service.get(id));
     }
 
     @PatchMapping("/{id}")
-    @PreAuthorize("hasRole('manager')")
     public ResponseEntity<Aluno> update(@PathVariable Long id, @RequestBody AlunoUpdateForm form) {
         return ResponseEntity.ok(service.update(id, form));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('manager')")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         service.delete(id);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}/avaliacao")
-    @PreAuthorize("hasAnyRole('managers', 'user')")
     public ResponseEntity<Iterable<AvaliacaoFisica>> getAllAvaliacaoFisica(
             @PathVariable("id") Long idAluno) {
         return ResponseEntity.ok(service.getAllAvaliacaoFisicaAluno(idAluno));
